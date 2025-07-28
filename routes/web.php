@@ -109,8 +109,9 @@ Route::prefix('nilai')->group(function () {
     
 Route::get('/export-nilai/excel', [NilaiController::class, 'exportExcel'])->name('nilaiExportExcel');
 Route::get('/export-nilai/pdf', [NilaiController::class, 'exportPdf'])->name('nilaiExportPdf');
+Route::get('/nilai/export-excel-siswa', [NilaiController::class, 'exportExcelSiswa'])->name('nilaiExportExcelSiswa');
+Route::get('/nilai/export-pdf-siswa', [NilaiController::class, 'exportPdfSiswa'])->name('nilaiExportPdfSiswa');
 
-    // ✅ Nilai untuk siswa yang sedang login (hanya lihat)
     Route::get('siswa', [NilaiController::class, 'nilaiSaya'])->name('nilaiSiswa');
 
     Route::get('siswa-by-kelas', [SiswaController::class, 'getByKelas'])->name('siswaByKelas');

@@ -10,6 +10,7 @@ use App\Exports\NilaiExport;
 use Illuminate\Http\Request;
 use App\Models\MataPelajaran;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Exports\NilaiSiswaExport;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -163,4 +164,20 @@ class NilaiController extends Controller
         $pdf = Pdf::loadView('kepalasekolah/nilai/pdf', compact('nilai'));
         return $pdf->download('data_nilai.pdf');
     }
+
+    public function exportExcelSiswa()
+{
+    $siswaId = auth()->user()->siswa->id;
+    return Excel::download(new NilaiSiswaExport($siswaId), 'nilai_siswa.xlsx');
+}
+
+public function exportPdfSiswa()
+{
+    $siswaId = auth()->user()->siswa->id;
+    $data = Nilai::with(['siswa', 'guru', 'mapel'])
+        ->where('siswa_id', $siswaId)->get();
+
+    $pdf = Pdf::loadView('siswa/pdf', compact('data'));
+    return $pdf->download('nilai_siswa.pdf');
+}
 }
